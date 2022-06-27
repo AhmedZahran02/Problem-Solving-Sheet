@@ -5,6 +5,7 @@
 #define infile() freopen("max-pair.in", "r", stdin)
 #define sortv(vec) sort(vec.begin(),vec.end()) //sort vector
 typedef long long ll;
+typedef unsigned long long ull;
 const double pi = 3.14159265358979323846;
 
 using namespace std;
@@ -71,7 +72,7 @@ bool sortbysec(const pair<int, int>& a, const pair<int, int>& b)
     return a.first > b.first;
 }
 //Modular multiplicative inverse a=3 m=11 out=4 3*4
-int mpow(int a, int m) 
+int mpow(int a, int m)
 {
     for (int x = 1; x < m; x++)
         if (((a % m) * (x % m)) % m == 1)
@@ -97,14 +98,69 @@ ll PowMod(ll b, ll e, ll M) {
     return (e % 2) ? (p * b) % M : p;
 }
 
-ll num(ll n, ll m, ll c) {
-    return c==1?ceil(((m - 7) * (n - 7)) / 2.0):floor(((m - 7) * (n - 7)) / 2.0);
-}
 void solve() {
-    ll n, m, c;
-    while (cin >> n >> m >> c && !(n==0&&m==0&&c==0)) {
-        cout << num(n, m, c) << endl;
+    int n;
+    while (cin >> n && n != 0)
+    {
+        int nd = 0, s = 0;
+        int d2, m2, y2, c2;
+        d2 = 0;
+        m2 = 0;
+        y2 = 0;
+        c2 = 0;
+        for (int i = 0; i < n; i++)
+        {
+            int d, m, y, c; int a = 31;
+            cin >> d >> m >> y >> c;
+            if (m2 == 1 || m2 == 3 || m2 == 5 || m2 == 7 || m2 == 8 || m2 == 10 || m2 == 12)
+            {
+                a = 31;
+            }
+            else if (m2 == 4 || m2 == 6 || m2 == 9 || m2 == 11)
+            {
+                a = 30;
+            }
+            else if (m2 == 2)
+            {
+                if ((y % 4 == 0 && y % 100 != 0) || (y % 4 == 0 && y % 100 != 0 && y % 400 == 0))
+                {
+                    a = 29;
+                }
+                else
+                {
+                    a = 28;
+                }
+            }
+            a++;
+
+            int x2 = (m2 + 1) % 13;
+            if (x2 == 0)
+            {
+                x2++;
+            }
+            int x = (d2 + 1) % a;
+            if (x == 0)
+            {
+                x++;
+            }
+            if (y == y2 || (y == y2 + 1 && m2 == 12))
+            {
+
+                if (m == m2 || (m == x2 && (d2 == a-1)))
+                {
+                    if (d == x)
+                    {
+                        s += c - c2;
+                        nd++;
+                    }
+                }
+
+            }
+            d2 = d; m2 = m; y2 = y; c2 = c;
+        }
+        cout << nd << " " << s << endl;
     }
+
 }
 
 int main() {
@@ -112,7 +168,7 @@ int main() {
     fast2();
     //infile();
     //------------------------------------------- 
-    int t=1;
+    int t = 1;
     //cin >> t;
     while (t)
     {
