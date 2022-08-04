@@ -221,30 +221,50 @@ void dfs(int start, vector<vector<int>>& vec, vector<bool>& vis)
 //}
 
 void solve() {
-    string s; cin >> s;
-    if (s.length() % 2 == 0)
+    int n; cin >> n;
+    vector<int> ar(n);
+    bool d1 = 0,d2=0;
+    for (int i = 0; i < n; i++)
     {
-        cout << ceil(s.length() / 2.0) << endl;
-    }
-    else
-    {
-        bool d = 0;
-        for (int i = 1; i < s.length(); i++)
+        cin >> ar[i];
+        if (ar[i]%2==0)
         {
-            if (s[i] == '1')
-            {
-                d = 1;
-                break;
-            }
-        }
-        if (d)
-        {
-            cout << ceil(s.length() / 2.0) << endl;
+            ar[i] = ar[i] / 2;
         }
         else
         {
-            cout << ceil(s.length() / 2.0) - 1 << endl;
+            if (ar[i] < 0)
+            {
+                if (d1)
+                {
+                    ar[i] = ar[i] / 2 - 1;
+                    d1 = 0;
+                }
+                else
+                {
+                    ar[i] = ar[i] / 2;
+                    d1 = 1;
+                }
+            }
+            else
+            {
+                if (d2)
+                {
+                    ar[i] = ar[i] / 2 + 1;
+                    d2 = 0;
+                }
+                else
+                {
+                    ar[i] = ar[i] / 2;
+                    d2 = 1;
+                }
+            }
         }
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        cout << ar[i] << endl;
     }
 }
 
