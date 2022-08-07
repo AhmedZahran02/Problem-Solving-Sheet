@@ -259,44 +259,39 @@ ll bs(vector<int>& ar, ll start, ll end, ll val) {
 }
 
 void solve() {
-    int n; cin >> n;
-    vector<int> ar(n);
-    for (int i = 0; i < n; i++)
+    int n, k; cin >> n >> k;
+    vector<int> ar(n+1);
+    for (int i = 1; i <= n; i++)
     {
         cin >> ar[i];
     }
-    int mx = 0;
-    for (int i = 0; i < n; i++)
+    int res = 0;
+    for (int i = k; i >= 1 && 2 * k - i<=n; i--)
     {
-        int res = 1;
-        for (int j = i-1; j >= 0; j--)
+        if (ar[i]==1 && ar[2*k-i]==1)
         {
-            if (ar[j]<=ar[j+1])
+            if (i != 2 * k - i)
             {
                 res++;
             }
-            else
-            {
-                break;
-            }
-        }
-        for (int j = i + 1; j < n; j++)
-        {
-            if (ar[j] <= ar[j-1])
-            {
-                res++;
-            }
-            else
-            {
-                break;
-            }
-        }
-        if (res>mx)
-        {
-            mx = res;
+            res++;
         }
     }
-    cout << mx << endl;
+    for (int i = k+k; i <= n; i++)
+    {
+        if (ar[i]==1)
+        {
+            res++;
+        }
+    }
+    for (int i = k-(n-k)-1; i >= 1; i--)
+    {
+        if (ar[i] == 1)
+        {
+            res++;
+        }
+    }
+    cout << res << endl;
 }
 
 int main() {
