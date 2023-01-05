@@ -99,7 +99,7 @@ bool sortbysec(const pair<int, int>& a, const pair<int, int>& b)
     if (a.second == b.second) {
         return a.first < b.first;
     }
-    return a.second > b.second;
+    return a.second < b.second;
 }
 //Modular multiplicative inverse a=3 m=11 out=4 3*4
 int mpow(int a, int m)
@@ -339,10 +339,48 @@ public:
 };
 
 void solve() {
-    string s; cin >> s;
-    cout << s;
-    reverse(all(s));
-    cout << s << endl;
+    ll n; cin >> n;
+    vector<pair<ll, ll>>ar(n);
+    for (ll i = 0; i < n; i++)
+    {
+        ar[i].first = i;
+        cin >> ar[i].second;
+    }
+    sort(all(ar), sortbysec);
+    ll start = -1, end = -1;
+    bool yes = 0;
+    for (ll i = 0; i < n; i++)
+    {
+        if (i != ar[i].first && start == -1)
+        {
+            start = i + 1;
+        }
+        else if (start != -1 && ar[i].first < ar[i - 1].first && !yes) {
+            end = i + 1;
+        }
+        else if (start != -1 && ar[i].first > ar[i - 1].first) {
+            yes = 1;
+        }
+        else if (i != ar[i].first && start != -1 && end != -1) {
+            start = -1;
+            end = -1;
+        }
+    }
+    if (end == -1 && yes)
+    {
+        cout << "no" << endl;
+    }
+    else {
+        cout << "yes" << endl;
+        if (start == -1)
+        {
+            cout << 1 << " " << 1 << endl;
+        }
+        else {
+            cout << start << " " << end << endl;
+        }
+    }
+
 }
 
 int main() {
