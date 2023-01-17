@@ -379,104 +379,91 @@ public:
 //    }
 //};
 
-bool checkx(vector<vector<char>>& ar) {
-    for (int i = 0; i < 3; i++)
-    {
-        if (ar[i][0] == 'X' && ar[i][1] == 'X' && ar[i][2] == 'X')
-        {
-            return true;
-        }
-    }
-    for (int i = 0; i < 3; i++)
-    {
-        if (ar[0][i] == 'X' && ar[1][i] == 'X' && ar[2][i] == 'X')
-        {
-            return true;
-        }
-    }
-    if (ar[0][0] == 'X' && ar[1][1] == 'X' && ar[2][2] == 'X')
+bool winning(string cur) {
+    if (cur[0] == cur[1] && cur[1] == cur[2] && cur[2] != '.')
     {
         return true;
     }
-    if (ar[0][2] == 'X' && ar[1][1] == 'X' && ar[2][0] == 'X')
+    if (cur[3] == cur[4] && cur[4] == cur[5] && cur[5] != '.')
+    {
+        return true;
+    }
+    if (cur[6] == cur[7] && cur[7] == cur[8] && cur[8] != '.')
+    {
+        return true;
+    }
+
+    if (cur[0] == cur[3] && cur[3] == cur[6] && cur[6] != '.')
+    {
+        return true;
+    }
+    if (cur[1] == cur[4] && cur[4] == cur[7] && cur[7] != '.')
+    {
+        return true;
+    }
+    if (cur[2] == cur[5] && cur[5] == cur[8] && cur[8] != '.')
+    {
+        return true;
+    }
+
+    if (cur[0] == cur[4] && cur[4] == cur[8] && cur[8] != '.')
+    {
+        return true;
+    }
+    if (cur[2] == cur[4] && cur[4] == cur[6] && cur[6] != '.')
     {
         return true;
     }
     return false;
 }
 
-bool checko(vector<vector<char>>& ar) {
-    for (int i = 0; i < 3; i++)
+bool filled(string cur) {
+    for (int i = 0; i < 9; i++)
     {
-        if (ar[i][0] == 'O' && ar[i][1] == 'O' && ar[i][2] == 'O')
+        if (cur[i] == '.')
         {
-            return true;
+            return false;
         }
     }
-    for (int i = 0; i < 3; i++)
-    {
-        if (ar[0][i] == 'O' && ar[1][i] == 'O' && ar[2][i] == 'O')
-        {
-            return true;
-        }
-    }
-    if (ar[0][0] == 'O' && ar[1][1] == 'O' && ar[2][2] == 'O')
-    {
-        return true;
-    }
-    if (ar[0][2] == 'O' && ar[1][1] == 'O' && ar[2][0] == 'O')
-    {
-        return true;
-    }
-    return false;
+    return true;
 }
 
 void solve() {
-    vector<vector<char>>ar(3, vector<char>(3));
-    int x = 0, o = 0;
-    for (int i = 0; i < 3; i++)
-    {
-        for (int j = 0; j < 3; j++)
+    string s;
+    while (cin >> s && s != "end") {
+        string start = ".........";
+
+        queue<pair<string, bool>>q;
+        q.push({ start,0 });
+        bool d = 0;
+        while (!q.empty())
         {
-            cin >> ar[i][j];
-            if (ar[i][j] == 'X')
+            string cur = q.front().first;
+            bool cp = q.front().second;
+            q.pop();
+
+            if (cur == s && (winning(cur) || filled(cur)))
             {
-                x++;
+                cout << "valid" << endl;
+                d = 1;
+                break;
             }
-            else if (ar[i][j] == 'O') {
-                o++;
-            }
-        }
-    }
-    if (x > o + 1 || o > x)
-    {
-        cout << "no" << endl;
-        return;
-    }
-    else {
-        if (checko(ar)) {
-            if (checkx(ar))
+
+            if (winning(cur)) continue;
+
+            for (int i = 0; i < 3 * 3; i++)
             {
-                cout << "no" << endl;
-                return;
+                if (cur[i] == '.') {
+                    cur[i] = (cp ? 'O' : 'X');
+                    if (cur[i] == s[i]) q.push({ cur, !cp });
+                    cur[i] = '.';
+                }
             }
-            else if (x == o) {
-                cout << "yes" << endl;
-                return;
-            }
-            cout << "no" << endl;
-            return;
         }
-        else if (checkx(ar)) {
-            if (x == o + 1) {
-                cout << "yes" << endl;
-                return;
-            }
-            cout << "no" << endl;
-            return;
+        if (!d)
+        {
+            cout << "invalid" << endl;
         }
-        cout << "yes" << endl;
-        return;
     }
 }
 
@@ -486,7 +473,7 @@ int main() {
     //infile();
     //-------------------------------------------
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while (t)
     {
         solve();
@@ -494,82 +481,3 @@ int main() {
     }
     return 0;
 }
-
-//bfs solution :
-
-//bool winning(string cur) {
-//    if (cur[0] == cur[1] && cur[1] == cur[2] && cur[2] != '.')
-//    {
-//        return true;
-//    }
-//    if (cur[3] == cur[4] && cur[4] == cur[5] && cur[5] != '.')
-//    {
-//        return true;
-//    }
-//    if (cur[6] == cur[7] && cur[7] == cur[8] && cur[8] != '.')
-//    {
-//        return true;
-//    }
-//
-//    if (cur[0] == cur[3] && cur[3] == cur[6] && cur[6] != '.')
-//    {
-//        return true;
-//    }
-//    if (cur[1] == cur[4] && cur[4] == cur[7] && cur[7] != '.')
-//    {
-//        return true;
-//    }
-//    if (cur[2] == cur[5] && cur[5] == cur[8] && cur[8] != '.')
-//    {
-//        return true;
-//    }
-//
-//    if (cur[0] == cur[4] && cur[4] == cur[8] && cur[8] != '.')
-//    {
-//        return true;
-//    }
-//    if (cur[2] == cur[4] && cur[4] == cur[6] && cur[6] != '.')
-//    {
-//        return true;
-//    }
-//    return false;
-//}
-//
-//void solve() {
-//    string s = "";
-//    for (int i = 0; i < 3; i++)
-//    {
-//        string x;
-//        cin >> x;
-//        s += x;
-//    }
-//    string start = ".........";
-//
-//    queue<pair<string, bool>>q;
-//    q.push({ start,0 });
-//    while (!q.empty())
-//    {
-//        string cur = q.front().first;
-//        bool cp = q.front().second;
-//        q.pop();
-//
-//        if (cur == s)
-//        {
-//            cout << "yes" << endl;
-//            return;
-//        }
-//
-//        if (winning(cur)) continue;
-//
-//        for (int i = 0; i < 3 * 3; i++)
-//        {
-//            if (cur[i] == '.') {
-//                cur[i] = (cp ? 'O' : 'X');
-//                if (cur[i] == s[i]) q.push({ cur, !cp });
-//                cur[i] = '.';
-//            }
-//        }
-//    }
-//    cout << "no" << endl;
-//}
-
