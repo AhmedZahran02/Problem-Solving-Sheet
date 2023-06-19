@@ -130,6 +130,7 @@ void solve() {
             cout << "NO" << endl;
         }
         else {
+            // you can just say y > the 2 eqs of the bottom and < the 2 eqs of the top
             if (d == n - d)
             {
                 case2(n, d, x, y);
