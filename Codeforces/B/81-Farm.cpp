@@ -14,20 +14,6 @@ const double pi = 3.14159265358979323846;
 
 using namespace std;
 
-//long long int faster pow func
-ll fastpow(ll b, ll e) {
-    if (!e)
-    {
-        return 1;
-    }
-    if (e & 1)
-    {
-        return b * fastpow(b, e - 1);
-    }
-    ll x = fastpow(b, e / 2);
-    return x * x;
-}
-
 void solve() {
     ll n; cin >> n;
     if (n > 2 || n == 0)
