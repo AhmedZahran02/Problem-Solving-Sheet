@@ -88,19 +88,19 @@ void solve() {
             if (isPrime(num - 3))
             {
                 cout << ans1 << " " << ans2 << " " << num - 3 << " " << 3 << endl;
-                if (!isPrime(ans1) || !isPrime(ans2) || !isPrime(num - 3))
+                /*if (!isPrime(ans1) || !isPrime(ans2) || !isPrime(num - 3))
                 {
                     cout << "Failed !!!!!!!!!!" << endl;
                     return;
-                }
+                }*/
             }
             else {
                 cout << ans1 << " " << ans2 << " " << num - 2 << " " << 2 << endl;
-                if (!isPrime(ans1) || !isPrime(ans2) || !isPrime(num - 2))
-                {
-                    cout << "Failed !!!!!!!!!!" << endl;
-                    return;
-                }
+                //if (!isPrime(ans1) || !isPrime(ans2) || !isPrime(num - 2))
+                //{
+                //    cout << "Failed !!!!!!!!!!" << endl;
+                //    return;
+                //}
             }
         }
     }
